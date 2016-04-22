@@ -144,7 +144,7 @@ switch ($_POST['main_action']) {
 
         if (!$sth->execute()) {
             error_log(print_r($sth->errorInfo(), true));
-            die('Error inserting report into database');
+            die('Error inserting report into database'.$sth->errorInfo());
         }
 
         $udoit_report = json_decode($encoded_report);
