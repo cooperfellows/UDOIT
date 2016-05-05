@@ -109,7 +109,7 @@ switch ($_POST['main_action']) {
         $udoit = new Udoit($data);
         $udoit->buildReport();
 
-	    error_log('<pre>'.print_r($udoit->bad_content,TRUE).'</pre>');
+	    error_log(print_r($udoit->bad_content,TRUE));
 
         $to_encode = [
             'course'        => $SESSION_context_title,
@@ -133,7 +133,7 @@ switch ($_POST['main_action']) {
         $dbh = include('../lib/db.php');
 
 		// Send total results as JSON for review
-		error_log('<pre>'.print_r($encoded_report,TRUE).'</pre>');
+		error_log(print_r($encoded_report,TRUE));
 
         $sth = $dbh->prepare("
             INSERT INTO
