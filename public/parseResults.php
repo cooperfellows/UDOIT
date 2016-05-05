@@ -187,7 +187,7 @@ function isYouTubeVideo($link_url, $regex)
 																<input type="hidden" name="reporttype" value="suggestion">
 
 																<?php if ($item->type == "cssTextHasContrast"):
-																	error_log(print_r($item, true));
+																	error_log(print_r($item, true),1,'cfellows@champlain.edu');
 																	?>
 																	<?php for ($i = 0; $i < count($item->colors); $i++): ?>
 																		<input type="hidden" name="errorcolor[<?= $i; ?>]" value="<?= $item->colors[$i]; ?>">

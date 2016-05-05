@@ -109,6 +109,8 @@ switch ($_POST['main_action']) {
         $udoit = new Udoit($data);
         $udoit->buildReport();
 
+	    error_log($udoit->bad_content,1,'cfellows@champlain.edu');
+
         $to_encode = [
             'course'        => $SESSION_context_title,
             'total_results' => $udoit->total_results,
@@ -129,6 +131,9 @@ switch ($_POST['main_action']) {
         chmod($file, 0777);
 
         $dbh = include('../lib/db.php');
+
+		// Send total results as JSON for review
+		error_log($encoded_report,1,'cfellows@champlain.edu');
 
         $sth = $dbh->prepare("
             INSERT INTO
