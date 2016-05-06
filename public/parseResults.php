@@ -177,6 +177,9 @@ function isYouTubeVideo($link_url, $regex)
 														<?php if ($item->type === "cssTextHasContrast" || $item->type === "imgHasAlt" || $item->type === "imgNonDecorativeHasAlt" || $item->type === "tableDataShouldHaveTh" || $item->type === "tableThShouldHaveScope" || $item->type === "headersHaveText" || $item->type == "aMustContainText" || $item->type == "imgAltIsDifferent"): ?>
 															<button class="fix-this no-print btn btn-success instance" value="<?= $item->type ?>">U FIX IT!</button>
 															<div class="toolmessage instance">UFIXIT is disabled because this is an old report. Rescan the course to use UFIXIT.</div>
+															<pre>
+																		<?php echo print_r($item, true);?>
+																	</pre>
 															<form class="ufixit-form form-horizontal no-print hidden instance" action="lib/process.php" method="post" role="form">
 																<input type="hidden" name="main_action" value="ufixit">
 																<input type="hidden" name="contenttype" value="<?= $bad->title; ?>">
@@ -189,9 +192,7 @@ function isYouTubeVideo($link_url, $regex)
 																<?php if ($item->type == "cssTextHasContrast"):
 																	error_log(print_r($item, true));
 																	?>
-																	<pre>
-																		<?php echo print_r($item, true);?>
-																	</pre>
+
 																	<?php for ($i = 0; $i < count($item->colors); $i++): ?>
 																		<input type="hidden" name="errorcolor[<?= $i; ?>]" value="<?= $item->colors[$i]; ?>">
 																	<?php endfor; ?>
