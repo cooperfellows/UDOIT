@@ -79,8 +79,9 @@ class reportStatic extends quailReporter
 									$hexColors  = [];
 
 									error_log($styleValue);
-									
-									preg_match_all("/(#[0-9a-f]{6}|#[0-9a-f]{3})/", $styleValue, $hexColors);
+
+//									preg_match_all("/(#[0-9a-f]{6}|#[0-9a-f]{3})/", $styleValue, $hexColors);
+									preg_match_all("/(?:(?:background-)?color: ?)(#[0-9a-f]{6}|#[0-9a-f]{3})/", $styleValue, $hexColors);
 
 									error_log('hex colors after preg');
 									error_log(print_r($hexColors,TRUE));
