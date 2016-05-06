@@ -87,7 +87,7 @@ class reportStatic extends quailReporter
 									error_log('hex colors after preg');
 									error_log(print_r($hexColors,TRUE));
 
-									$hexColors = array_unique($hexColors[0]);
+									$hexColors = array_unique($hexColors[1]);
 									error_log('hex colors after unique');
 									error_log(print_r($hexColors,TRUE));
 								}
