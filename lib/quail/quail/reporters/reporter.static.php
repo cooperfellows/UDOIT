@@ -72,9 +72,10 @@ class reportStatic extends quailReporter
 					if (is_object($problem)) {
 						if ($testname === "cssTextHasContrast" || $testname === "cssTextStyleEmphasize") {
 							foreach ($problem->element->attributes as $name) {
+								$hexColors  = [];
 								if ($name->name === "style") {
 									$styleValue = $name->value;
-									$hexColors  = [];
+
 
 									preg_match_all("/(#[0-9a-f]{6}|#[0-9a-f]{3})/", $styleValue, $hexColors);
 
