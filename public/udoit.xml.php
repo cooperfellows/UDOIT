@@ -17,13 +17,16 @@
 *
 *	Primary Author Contact:  Jacob Bates <jacob.bates@ucf.edu>
 */
+
+require_once('../config/settings.php');
+
 $servername = 'https://' . $_SERVER['SERVER_NAME'];
-$exploded = explode('/',$_SERVER['PHP_SELF']);
-$scriptname= @end( $exploded );
-$scriptpath=str_replace($scriptname,'',$_SERVER['PHP_SELF']);
-$launch = $servername . $scriptpath;
+$exploded   = explode('/',$_SERVER['PHP_SELF']);
+$scriptname = @end( $exploded );
+$scriptpath = str_replace($scriptname,'',$_SERVER['PHP_SELF']);
+$launch     = $servername . $scriptpath;
 header('Content-type: text/xml');
-echo '<?xml version="1.0" encoding="UTF-8"?>';
+echo('<?xml version="1.0" encoding="UTF-8"?>');
 
 ?>
 <cartridge_basiclti_link xmlns="http://www.imsglobal.org/xsd/imslticc_v1p0"
@@ -50,7 +53,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 			<lticm:property name="url"><?= $launch ?></lticm:property>
 			<lticm:property name="default">enabled</lticm:property>
 			<lticm:property name="visibility">admins</lticm:property>
-			<lticm:property name="text">UDOIT</lticm:property>
+			<lticm:property name="text"><?= $canvas_nav_item_name ? $canvas_nav_item_name : 'UDOIT' ?></lticm:property>
 			<lticm:property name="enabled">true</lticm:property>
 		</lticm:options>
 	</blti:extensions>

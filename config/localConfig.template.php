@@ -12,6 +12,9 @@ $oauth2_uri = '';
 /* Disable headings check character count */
 $doc_length = '1500';
 
+/* Tool name for display in Canvas Navigation */
+$canvas_nav_item_name = getenv('CANVAS_NAV_ITEM_NAME');
+
 /* Google/YouTube Data Api Key */
 define( 'GOOGLE_API_KEY', '');
 
@@ -30,3 +33,8 @@ $db_reports_table = 'reports';
 $dsn              = "{$db_type}:host={$db_host};port={$db_port};dbname={$db_name}";
 
 $debug = false;
+
+// OVERRIDE the default of PROD
+// $UDOIT_ENV = ENV_TEST;
+// $UDOIT_ENV = ENV_PROD;
+// $UDOIT_ENV = ENV_DEV;
