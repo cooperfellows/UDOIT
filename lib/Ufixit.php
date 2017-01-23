@@ -119,8 +119,6 @@ class Ufixit
             $fixed_img = $this->dom->saveHTML($img);
         }
 
-        $fixed_img = $remove_attr;
-
         return $fixed_img;
     }
 
