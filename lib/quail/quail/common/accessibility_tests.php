@@ -1,9 +1,9 @@
 <?php
 
 // include_once('../config/localConfig.php');
-	
 
-/** 
+
+/**
 *    QUAIL - QUAIL Accessibility Information Library
 *    Copyright (C) 2009 Kevin Miller
 *
@@ -1196,7 +1196,7 @@ class cssTextHasContrast extends quailColorTest
 
 				if (isset($style['font-weight'])) {
 					preg_match_all('!\d+!', $style['font-weight'], $matches);
-					
+
 					if (count($matches) > 0) {
 						if ($matches >= 700) {
 							$bold = true;
@@ -1285,7 +1285,7 @@ class cssTextStyleEmphasize extends quailColorTest
 
 				if (isset($style['font-weight'])) {
 					preg_match_all('!\d+!', $style['font-weight'], $matches);
-					
+
 					if (count($matches) > 0) {
 						if ($matches >= 700) {
 							$bold = true;
@@ -2897,10 +2897,12 @@ class noHeadings extends quailTest
 	function check()
 	{
 		global $doc_length;
-		
+
 		$elements = $this->getAllElements('p');
 
 		$document_string = "";
+
+	  	$heading_role = 'heading';
 
 		foreach ($elements as $element) {
 			$document_string .= $element->textContent;
@@ -2908,18 +2910,60 @@ class noHeadings extends quailTest
 
 		if (strlen($document_string) > $doc_length){
 
-			$no_headings = 0;
+			// Assume we have headings, look for all possible heading types
+		  	$no_headings = false;
 
-			if (!$this->getAllElements('h1')
+			// Traditional heading elements
+		  	if (!$this->getAllElements('h1')
 				&& !$this->getAllElements('h2')
 				&& !$this->getAllElements('h3')
 				&& !$this->getAllElements('h4')
 				&& !$this->getAllElements('h5')
 				&& !$this->getAllElements('h6')) {
 				$no_headings = true;
-			} else {
-				$no_headings = false;
 			}
+
+			// Look for elements with a role="heading" attribute, but only if we don't have any headers yet
+            if($no_headings) {
+                // Array of elements we want to look at and see if they have a role attribute
+                // add another element here to extend our search
+                $elements_to_search_for = array(
+                    'p',
+                    'div'
+                );
+                foreach ($elements_to_search_for as $element_to_search_for) {
+                    // Don't bother looking for other headers once we prove at least one exists in the doc
+                    if($no_headings) {
+                        $elements_with_roles = $this->getElementsByAttribute($element_to_search_for, 'role');
+                        // The above returns a multivalued array whose keys are the value of the "role" attribute
+                        // and whose value is an array of elements that have that role
+                        if (count($elements_with_roles) > 0) {
+                            // So we loop through all the "roles" we were returned
+                            foreach ($elements_with_roles as $role => $elements) {
+                                // If the role we are looking at is the header role, and there was at least one element with that role
+                                if ($role === $heading_role && count($elements) > 0) {
+                                    // Then look through each element to ensure there is text inside that element
+                                    // We would still want to trigger an error in this case:
+                                    // <p role="heading" aria-level="1"></p>
+                                    foreach ($elements as $element) {
+                                        if($no_headings) {
+                                            try{
+                                                // Not all of the HTML elements return a nodeValue
+                                                // @see http://stackoverflow.com/questions/12380919/php-dom-textcontent-vs-nodevalue
+                                                if ($element->nodeValue !== '') {
+                                                    $no_headings = false;
+                                                }
+                                            } catch(Exception $e) {
+                                                error_log($e);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
 			if ($no_headings) {
 				$this->addReport(null, null, false);
