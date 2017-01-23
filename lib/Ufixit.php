@@ -118,6 +118,8 @@ class Ufixit
             $img->removeAttribute('data-api-returntype');
             $fixed_img = $this->dom->saveHTML($img);
         }
+        
+        $fixed_img = trim($fixed_img,">");
 
         return $fixed_img;
     }
