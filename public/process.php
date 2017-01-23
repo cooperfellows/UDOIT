@@ -100,7 +100,7 @@ switch ($main_action) {
             'base_uri'     => $base_url,
             'content_id'   => filter_input(INPUT_POST, 'contentid', FILTER_SANITIZE_STRING),
             'content_type' => filter_input(INPUT_POST, 'contenttype', FILTER_SANITIZE_STRING),
-            'error_html'   => htmlspecialchars_decode(filter_input(INPUT_POST, 'errorhtml', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),
+            'error_html'   => html_entity_decode(filter_input(INPUT_POST, 'errorhtml', FILTER_SANITIZE_FULL_SPECIAL_CHARS)),
             'error_colors' => empty($error_color) ? '' : $error_color,
             'error_type'   => filter_input(INPUT_POST, 'errortype', FILTER_SANITIZE_STRING),
             'bold'         => (filter_input(INPUT_POST, 'add-bold', FILTER_SANITIZE_STRING) == 'bold'),
@@ -166,7 +166,7 @@ switch ($main_action) {
 
             case 'tableThShouldHaveScope':
                 $new_content = filter_input(INPUT_POST, 'newcontent', FILTER_SANITIZE_STRING);
-                $corrected_error = $ufixit->fixTableThScopes($data['error_html'], $data['new_content']);
+                $corrected_error = $ufixit->fixTableThScopes($data['error_html'], $new_content);
                 break;
         }
 
@@ -182,7 +182,8 @@ switch ($main_action) {
                 break;
 
             case 'files':
-                $ufixit->uploadFixedFiles($corrected_error, $data['error_html']);
+                $file_info = $ufixit->uploadFixedFiles($corrected_error, $data['error_html']);
+                print_r(json_encode($file_info));
                 break;
 
             case 'pages':
