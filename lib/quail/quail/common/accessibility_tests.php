@@ -2922,7 +2922,8 @@ class noHeadings extends quailTest
 				&& !$this->getAllElements('h6')) {
 				$no_headings = true;
 			}
-			// Look for elements with a role="heading" attribute (but only if $no_headings is TRUE
+
+			// Look for elements with a role="heading" attribute, but only if we don't have any headers yet
             if($no_headings) {
                 // Array of elements we want to look at and see if they have a role attribute
                 // add another element here to extend our search
@@ -2933,11 +2934,10 @@ class noHeadings extends quailTest
                 foreach ($elements_to_search_for as $element_to_search_for) {
                     // Don't bother looking for other headers once we prove at least one exists in the doc
                     if($no_headings) {
-                        $elements_with_roles = $this->getElementsByAttribute('p', 'role');
+                        $elements_with_roles = $this->getElementsByAttribute($element_to_search_for, 'role');
                         // The above returns a multivalued array whose keys are the value of the "role" attribute
                         // and whose value is an array of elements that have that role
                         if (count($elements_with_roles) > 0) {
-                            error_log(print_r($elements_with_roles, TRUE));
                             // So we loop through all the "roles" we were returned
                             foreach ($elements_with_roles as $role => $elements) {
                                 // If the role we are looking at is the header role, and there was at least one element with that role
@@ -2946,9 +2946,17 @@ class noHeadings extends quailTest
                                     // We would still want to trigger an error in this case:
                                     // <p role="heading" aria-level="1"></p>
                                     foreach ($elements as $element) {
-                                        if ($element->nodeValue !== '') {
-                                            error_log('found a ' . $element_to_search_for . ' acting as a header!');
-                                            $no_headings = false;
+                                        if($no_headings) {
+                                            try{
+                                                // Not all of the HTML elements return a nodeValue
+                                                // @see http://stackoverflow.com/questions/12380919/php-dom-textcontent-vs-nodevalue
+                                                if ($element->nodeValue !== '') {
+                                                    error_log('found a ' . $element_to_search_for . ' acting as a header!');
+                                                    $no_headings = false;
+                                                }
+                                            } catch(Exception $e) {
+                                                error_log($e);
+                                            }
                                         }
                                     }
                                 }
