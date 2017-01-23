@@ -2908,17 +2908,36 @@ class noHeadings extends quailTest
 
 		if (strlen($document_string) > $doc_length){
 
-			$no_headings = 0;
+			// Assume we have headings, look for all possible heading types
+		  	$no_headings = false;
 
-			if (!$this->getAllElements('h1')
+			// Traditional heading elements
+		  	if (!$this->getAllElements('h1')
 				&& !$this->getAllElements('h2')
 				&& !$this->getAllElements('h3')
 				&& !$this->getAllElements('h4')
 				&& !$this->getAllElements('h5')
 				&& !$this->getAllElements('h6')) {
 				$no_headings = true;
-			} else {
-				$no_headings = false;
+			}
+			// Look for elements with a role="heading" attribute
+		    $ps_with_roles = $this->getElementsByAttribute('p','role');
+			if(count($ps_with_roles) > 0){
+				// Look at each element returned and see what it's role is
+			  error_log(print_r($ps_with_roles,TRUE));
+			  foreach($ps_with_roles as $p_with_role) {
+
+			  }
+			}
+
+			// Look for elements with a role="heading" attribute
+			$divs_with_roles = $this->getElementsByAttribute('div','role');
+			if(count($divs_with_roles) > 0){
+			  // Look at each element returned and see what it's role is
+			  error_log(print_r($divs_with_roles,TRUE));
+			  foreach($divs_with_roles as $div_with_roles) {
+
+			  }
 			}
 
 			if ($no_headings) {
