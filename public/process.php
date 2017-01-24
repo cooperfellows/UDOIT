@@ -152,8 +152,8 @@ switch ($main_action) {
                 $new_content = filter_input(INPUT_POST, 'newcontent', FILTER_SANITIZE_STRING);
                 $corrected_error = $ufixit->fixAltText($data['error_html'], $new_content);
                 //@see http://regexr.com/3f4qm
-                $remove_attr = preg_replace("/data-api-(endpoint|returntype)=\"[a-zA-Z\/\.0-9\:\%]*\"/s", "", $data['error_html']);
-                $data['error_html'] = $remove_attr;
+                $remove_attr = preg_replace("/ data-api-(endpoint|returntype)=\"[a-zA-Z\/\.0-9\:\%]*\"/s", "", $data['error_html']);
+                // $data['error_html'] = trim($remove_attr,'>');
                 error_log('Text to replace: ' . $data['error_html']);
                 break;
 
