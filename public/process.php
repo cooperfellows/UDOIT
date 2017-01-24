@@ -150,14 +150,8 @@ switch ($main_action) {
             case 'imgAltIsDifferent':
             case 'imgAltIsTooLong':
                 $new_content = filter_input(INPUT_POST, 'newcontent', FILTER_SANITIZE_STRING);
-                // We need to remove the data-* attributes that Canvas adds when accessing this information via the API
-                // It get's stripped from the corrected HTML during the ->fixAltText method.
-                // But in order to correctly replace the text, we need to strip it from the "error" html as well
-                // @see http://regexr.com/3f4qm For the regex
-                // $data['error_html'] = preg_replace("/ data-api-(endpoint|returntype)=\"[a-zA-Z\/\.0-9\:\%]*\"/s", "", $data['error_html']);
-                $corrected_error = $ufixit->fixAltText($data['error_html'], $new_content);
 
-                error_log('Text to replace: ' . $data['error_html']);
+                $corrected_error = $ufixit->fixAltText($data['error_html'], $new_content);
                 break;
 
             case 'tableDataShouldHaveTh':

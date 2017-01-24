@@ -107,7 +107,7 @@ class Ufixit
      */
     public function fixAltText($error_html, $new_content, $submitting_again = false)
     {
-        error_log($error_html);
+
         $this->dom->loadHTML('<?xml encoding="utf-8" ?>' . $error_html);
 
         $imgs = $this->dom->getElementsByTagName('img');
@@ -118,7 +118,6 @@ class Ufixit
             $removed_endpoint = $img->removeAttribute('data-api-endpoint');
             $removed_endpoint = $img->removeAttribute('data-api-returntype');
             $fixed_img = $this->dom->saveHTML($img);
-            error_log('Removed attr image: ' . $fixed_img);
         }
 
         return $fixed_img;
