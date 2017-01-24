@@ -115,13 +115,14 @@ class Ufixit
 
         foreach ($imgs as $img) {
             $img->setAttribute('alt', $new_content);
-            // $removed_endpoint = $img->removeAttribute('data-api-endpoint');
-            // $removed_endpoint = $img->removeAttribute('data-api-returntype');
+            $removed_endpoint = $img->removeAttribute('data-api-endpoint');
+            $removed_endpoint = $img->removeAttribute('data-api-returntype');
             $fixed_img = $this->dom->saveHTML($img);
-            error_log($fixed_img);
+            error_log('Removed attr image: ' . $fixed_img);
         }
         
-        // $fixed_img = trim($fixed_img,">");
+        $fixed_img = trim($fixed_img,">");
+        error_log('Trimmed image: ' . $fixed_img);
 
         return $fixed_img;
     }
