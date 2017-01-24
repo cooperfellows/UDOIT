@@ -114,9 +114,22 @@ class Ufixit
 
         foreach ($imgs as $img) {
             $img->setAttribute('alt', $new_content);
-            $img->removeAttribute('data-api-endpoint');
-            $img->removeAttribute('data-api-returntype');
+            $removed_endpoint = $img->removeAttribute('data-api-endpoint');
+            if($removed_endpoint) {
+                error_log('Removed ENDPOINT!');
+            }
+            else{
+                error_log('FAILED ENDPOINT!');
+            }
+            $removed_endpoint = $img->removeAttribute('data-api-returntype');
+            if($removed_endpoint) {
+                error_log('Removed return!');
+            }
+            else{
+                error_log('FAILED return!');
+            }
             $fixed_img = $this->dom->saveHTML($img);
+            error_log($fixed_img);
         }
         
         $fixed_img = trim($fixed_img,">");
