@@ -107,6 +107,7 @@ class Ufixit
      */
     public function fixAltText($error_html, $new_content, $submitting_again = false)
     {
+        error_log($error_html);
         $this->dom->loadHTML('<?xml encoding="utf-8" ?>' . $error_html);
 
         $imgs = $this->dom->getElementsByTagName('img');
