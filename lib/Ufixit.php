@@ -120,9 +120,6 @@ class Ufixit
             $fixed_img = $this->dom->saveHTML($img);
             error_log('Removed attr image: ' . $fixed_img);
         }
-        
-        $fixed_img = trim($fixed_img,">");
-        error_log('Trimmed image: ' . $fixed_img);
 
         return $fixed_img;
     }
