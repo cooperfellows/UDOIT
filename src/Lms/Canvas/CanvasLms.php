@@ -214,11 +214,6 @@ class CanvasLms implements LmsInterface {
             }
         }
 
-        /* get HTML file content */
-        if (('file' === $contentType) && ('html' === $content['mime_class'])) {
-            $lmsContent['body'] = file_get_contents($content['url']);
-        }
-
         if (!$contentItem) {
             $contentItem = new ContentItem();
             $metadata = $parentLmsId ? array('parentLmsId' => $parentLmsId) : array();
@@ -390,18 +385,15 @@ class CanvasLms implements LmsInterface {
         $apiToken = $this->getApiToken($user);
 
         $canvasApi = new CanvasApi($apiDomain, $apiToken);
+        $scanFails = 0;
 
-        // Batch page pulling maintaince
-        $pageUrls = [];
-        $asyncFetch = true;
-
-        $start_time = microtime(true);
         foreach ($urls as $contentType => $url) {
             $response = $canvasApi->apiGet($url);
+            $statusCode = $response->getStatusCode();
 
-            if ($response->getErrors()) {
-                $this->util->createMessage('Error retrieving content. Failed API Call: ' . $url, 'error', $course, $user);
-                throw new \Exception('msg.sync.error.api');
+            if(!$statusCode || $statusCode != 200 || $response->getErrors()){
+                $scanFails += 1;
+                continue; // Continue to onto next content item if we failed to get a status code
             }
             else {
                 if ('syllabus' === $contentType) {
@@ -430,6 +422,9 @@ class CanvasLms implements LmsInterface {
                     $this->saveOrUpdateContentItem($canvasApi, $course, $contentType, $content, $force);
                 }
             }
+        }
+        if($scanFails > 0){
+            $this->util->createMessage('Failed to fetch {$scanFails} from LMS. Please try to rescan the course to account for all issues.', 'error', $course, $user);
         }        
         // push any updates made to content items to DB
         $this->entityManager->flush();
