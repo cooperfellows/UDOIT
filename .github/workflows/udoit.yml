@@ -1,0 +1,81 @@
+# GitHub Action for Symfony
+name: UDOIT
+on: [push, pull_request]
+jobs:
+  symfony:
+    name: UDOIT (PHP ${{ matrix.php-versions }} on ${{ matrix.operating-system }})
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-versions: ['8.4']
+        node-version: [20.19.0]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check PHP syntax errors
+        uses: overtrue/phplint@3.0.3
+
+        # This step now handles yarn caching as well
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, gd, pdo_mysql, pdo_pgsql
+          coverage: xdebug #optional
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: php-${{ matrix.php-versions }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: php-${{ matrix.php-versions }}-composer-
+
+      - name: Create .env file
+        run: cp .env.example .env
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+      - name: PHPUnit Testing
+        run: SYMFONY_DEPRECATIONS_HELPER=disabled ./vendor/bin/phpunit
+
+      - name: Yarn install
+        run: yarn install
+
+      - name: Yarn build
+        run: yarn build
+
+      # - name: Yarn test
+      #   run: yarn test
+
+      - name: Start and initialize Postgres
+        env:
+          DATABASE_URL: postgresql://udoit:udoit@127.0.0.1:5432/udoit?serverVersion=11&charset=utf8
+        run: |
+          sudo systemctl start postgresql.service
+          sudo -u postgres psql -c "CREATE DATABASE udoit;"
+          sudo -u postgres psql -c "CREATE USER udoit WITH PASSWORD 'udoit';"
+          sudo -u postgres psql -c "ALTER USER udoit WITH SUPERUSER;"
+          sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE "udoit" TO udoit;"
+          php bin/console doctrine:migrations:migrate
+
+      - name: Create and populate MySQL database
+        env:
+          DATABASE_URL: mysql://root:root@localhost/udoit
+        run: |
+          sudo systemctl start mysql.service
+          php bin/console doctrine:database:create
+          php bin/console doctrine:migrations:migrate
+
+      # Fix permissions before cleanup that may be used during 'Use Node' job
+      - name: Fix permissions
+        run: sudo chown -R $USER:$USER $GITHUB_WORKSPACE ~/.npm ~/.cache ~/.composer || true

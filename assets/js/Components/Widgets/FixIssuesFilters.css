@@ -1,0 +1,89 @@
+.filter-container {
+  margin-left: -1rem;
+  margin-right: -1rem;
+  padding: .5rem 1rem;
+
+  .search-group {
+    display: block;
+    position: relative;
+
+    input {
+      width: 15em;
+      min-width: 200px;
+      max-width: 250px;
+      padding-inline-start: 2em;
+
+      &:focus {
+        outline: 2px solid var(--focus-color);
+        outline-offset: 1px;
+      }
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.4em;
+      fill: var(--gray);
+      align-self: center;
+    }
+  }
+
+  .filter-pill {
+    padding: .15em .25em .15em .75em;
+    background-color: var(--gray-light);
+    cursor: pointer;
+    border-radius: 15px;
+
+    .filter-pill-text {
+      font-size: 0.8em;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: var(--gray-dark);
+    }
+
+    .filter-pill-remove {
+      background: transparent;
+      border-radius: 12px;
+      fill: var(--gray-dark);
+    }
+
+    &:hover,
+    &:focus {
+      background-color: var(--gray);
+
+      .filter-pill-text {
+        color: var(--white);
+      }
+
+      .filter-pill-remove {
+        background: var(--white);
+        fill: var(--gray-dark);
+      }
+    }
+
+  }
+
+  .filter-group {
+    select {
+      max-width: 250px;
+      min-width: 180px;
+    }
+  }
+
+  .combo-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .combo-label {
+    font-size: 0.9em;
+    font-weight: 500;
+    font-family: var(--heading-font-family);
+    text-transform: uppercase;
+    align-self: center;
+  }
+
+  .combo-interactive-container {
+    max-width: 15.5em;
+    min-width: 8em;
+  }
+}

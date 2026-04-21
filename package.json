@@ -1,0 +1,49 @@
+{
+    "name": "udoit",
+    "description": "The Universal Design Online content Inspection Tool, or UDOIT (pronounced, 'You Do It') enables faculty to identify accessibility issues in their Learning Management System. It will scan a course, generate a report, and provide resources on how to address common accessibility issues.",
+    "version": "4.0.0",
+    "engines": {
+        "yarn": "1.x"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.28.0",
+        "@babel/plugin-transform-class-properties": "^7.27.1",
+        "@babel/preset-env": "^7.28.0",
+        "@babel/preset-react": "^7.27.1",
+        "@symfony/webpack-encore": "5.1.0",
+        "@testing-library/dom": "^10.4.0",
+        "@testing-library/jest-dom": "^6.6.3",
+        "@testing-library/react": "^16.3.0",
+        "@testing-library/user-event": "^14.6.1",
+        "copy-webpack-plugin": "13.0.0",
+        "jest": "^30.0.4",
+        "msw": "^2.10.4",
+        "regenerator-runtime": "^0.14.1",
+        "webpack-cli": "^5.1.4",
+        "webpack-notifier": "^1.15.0"
+    },
+    "license": "GPL-3.0-only",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "yarn install && encore dev --watch",
+        "build": "encore production --progress",
+        "test": "IGNORE_CONSOLE_ERRORS=1 IGNORE_CONSOLE_WARNINGS=1 jest",
+        "test:noErrors": "IGNORE_CONSOLE_ERRORS=1 jest",
+        "test:noWarns": "IGNORE_CONSOLE_WARNINGS=1 jest",
+        "test:noIgnore": "jest"
+    },
+    "dependencies": {
+        "axios": "1.10.0",
+        "chart.js": "^4.5.0",
+        "chroma-js": "^3.1.2",
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0",
+        "tinymce": "^7.9.1",
+        "webpack": "^5.100.2"
+    },
+    "resolutions": {
+        "**/tar": "~6.1.11"
+    }
+}

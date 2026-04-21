@@ -1,0 +1,66 @@
+security:
+    enable_authenticator_manager: true
+    password_hashers:
+        Symfony\Component\Security\Core\User\UserInterface: sha512
+    providers:
+        users:
+            entity:
+                class: 'App\Entity\User'
+                property: 'username'
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        ltiAuthorize:
+            pattern: ^/lti/authorize
+            stateless: false
+
+        oauthAuthorize:
+            pattern: ^/authorize
+            provider: users
+            custom_authenticators:
+                - App\Security\SessionAuthenticator
+
+        dashboard:
+            pattern: ^/dashboard
+            provider: users
+            custom_authenticators:
+                - App\Security\SessionAuthenticator
+        
+        api:
+           pattern: ^/api
+           provider: users
+           custom_authenticators:
+               - App\Security\SessionAuthenticator
+
+        download:
+           pattern: ^/download
+           provider: users
+           custom_authenticators:
+               - App\Security\SessionAuthenticator             
+
+        admin:
+            pattern: ^/admin
+            provider: users
+            custom_authenticators:
+               - App\Security\SessionAuthenticator
+
+        test:
+            pattern: ^/test
+            stateless: false           
+
+#    # Easy way to control access for large sections of your site
+#    # Note: Only the *first* access control that matches will be used
+#    access_control:
+#        - { path: ^/profile, roles: ROLE_USER }
+#        - { path: ^/lti/authorize, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/lti/authorize/check, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: ^/lti/authorize/dev_lti_authorize, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        #- { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        #- { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

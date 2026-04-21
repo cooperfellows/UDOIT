@@ -1,0 +1,381 @@
+.live-preview-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+
+  h3 {
+    margin: 0;
+  }
+
+  a {
+    font-weight: 300;
+    text-align: end;
+    text-decoration: none;
+    font-size: .9em;
+    display: flex;
+    flex-direction: row;
+
+    &:hover, &:focus {
+      text-decoration: underline;
+    }
+  }
+
+}
+
+.ufixit-content-preview {
+  flex-grow: 1;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-sizing: border-box;
+
+  .ufixit-content-preview-rescan-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    z-index: 5;
+    transform: translateX(calc(100% + 2rem));
+    transition: transform var(--transition-time);
+
+    &.active {
+      transform: translateX(0);
+    }
+
+    .ufixit-content-preview-rescan {
+      padding: 0.5rem 1rem;
+      background-color: var(--primary-color-light);
+      border: 1px solid var(--border-color);
+      border-radius: 0 0 0 8px;
+      margin-top: 0;
+      transition: margin-left var(--transition-time);
+      font-size: .9em;
+      font-weight: 600;
+      box-shadow: 0 0 3px var(--gray-dark);
+
+      &.active {
+        margin-left: calc(-1rem - 1px);
+      }
+    }
+  }
+
+  .ufixit-content-preview-main {
+    position: absolute;
+    top: 0px;
+    padding: 1rem;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+    background-color: var(--white);
+    
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--text-color);
+    }
+  }
+}
+
+.ufixit-content-preview-no-error {
+  position: absolute;
+  top: 0px;
+  background-color: var(--white);
+  margin: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+}
+
+.ufixit-error-highlight {
+  outline: 3px dashed var(--error-color);
+  outline-offset: 1px;
+  anchor-name: --ufixit-error-highlight;
+
+  /* Errors without text won't have an outline unless they have a border to provide size */
+  &:not(table) {
+    border: 1px solid transparent;
+  }
+}
+
+.scroll-to-error-container {
+  position: sticky;
+  top: 0;
+  padding: 1rem 1.5rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.scroll-to-error {
+  opacity: 0.78;
+  transition: opacity var(--transition-time);
+  align-self: start;
+  pointer-events: all;
+
+  &:hover,
+  &:focus,
+  &:active {
+    opacity: 1;
+  }
+
+  &#scroll-to-error-down {
+    align-self: end;
+  }
+}
+
+.ufixit-alt-text-preview {
+  background-color: var(--gray-dark);
+  color: var(--white);
+  border-radius: 8px;
+  width: fit-content;
+
+  display: flex;
+  flex-direction: row;
+  border: 2px solid var(--gray-dark);
+  margin: 5px 0px;
+  
+  .ufixit-alt-text-preview-icon {
+    padding: 8px;
+    line-height: 0px;
+    fill: var(--white);
+  }
+
+  .ufixit-alt-text-preview-text-container {
+    display: flex;
+    flex-direction: column;
+    padding: .5rem 1rem .5rem .25rem;
+    max-width: 20em;
+    overflow: auto;
+
+    .ufixit-alt-text-preview-label {
+      font-weight: 600;
+      font-size: 1em;
+      padding-bottom: .25em;
+      color: var(--white);
+
+      a {
+        font-weight: 600;
+        color: var(--white);
+        text-decoration: none;
+        cursor: default;
+      }
+    }
+
+    .ufixit-alt-text-preview-text {
+      font-weight: 400;
+      font-size: .9em;
+      line-height: 1.4em;
+
+      a {
+        font-weight: 400;
+        color: var(--white);
+        text-decoration: none;
+        cursor: default;
+      }
+    }
+  }
+}
+
+.ufixit-file-details {
+  margin: 2rem 2rem 3rem 2rem;
+
+  .ufixit-file-details-label {
+    font-weight: bold;
+    margin-right: 1rem;
+    text-align: right;
+    width: 30%;
+    flex-shrink: 0;
+  }
+}
+
+.ufixit-heading-highlight {
+  margin-left: 20px;
+
+  &.ufixit-error-highlight {
+    margin-left: 19px;  /* To offset the required 1px border */
+  }
+  
+  &::before {
+    content: attr(ufixit-heading-type);
+    font-size: .85rem;
+    background-color: var(--gray-dark);
+    color: #fff;
+    position: absolute;
+    padding: 4px;
+    border-radius: 4px;
+    margin-left: -32px;
+    width: 20px;
+    text-align: center;
+    border: 1px solid var(--white)
+  }
+}
+
+.file-reference-table{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8em;
+  overflow-x: auto;
+
+  thead {
+
+    tr {
+      border-bottom: 1px solid var(--border-color);
+
+      th {
+        font-family: var(--heading-font-family);
+        font-weight: 600;
+        cursor: pointer;
+        padding: .5rem;
+        color: var(--text-color);
+        fill: var(--text-color);
+        border-bottom: 1px solid var(--border-color);
+        background-color: var(--gray-lighter);
+        text-align: start;
+
+        &.divider {
+          border-right: 2px solid var(--primary-color-inverse);
+        }
+        
+        &:last-child{
+          text-align: right;
+        }
+
+        .header-spacer {
+          width: 32px;
+          min-width: 32px;
+          height: auto;
+        }
+      }
+    }
+  }
+
+  tbody {
+
+    tr {
+      background-color: var(--white);
+
+      &:not(:last-child) {
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      td {
+        padding: .5rem;
+
+        &[textalign='end'] div {
+          text-align: right;
+        }
+
+        &:last-child{
+          text-align: right;
+        }
+
+        &.divider {
+          border-right: 2px solid var(--primary-color);
+        }
+      }
+
+      a {
+        color: var(--link-color);
+        text-decoration: none;
+        font-weight: 600;
+
+        &:hover,
+        &:focus {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+
+.status-badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+
+  border-radius: 6px;
+  font-size: 13px;
+  color: #4b5563;
+  text-transform: uppercase;
+}
+
+.old-file-status{
+  background-color: var(--gray-lighter);
+}
+
+.new-file-badge{
+  background-color: var(--primary-color-light);
+}
+
+.file-accessibility-info-wrapper{
+  background-color: white;
+  border-radius: 0.5em;
+}
+
+
+.accessibility-info-container{
+    border: solid;
+    border-color: var(--gray-lightest);
+    border-radius: 0.7em;
+    box-sizing: border-box;    
+} 
+
+.accessibility-instructions-container{
+    font-size: 0.65em;
+    background-color: var(--potential-color-light);
+    border-top: solid;
+    border-color: var(--potential-color);
+    box-sizing: border-box;
+    overflow: hidden;
+    margin: 0;
+    border-radius: 0 0 0.7em 0.7em; /* Match bottom corners if needed */
+}
+
+.no-reference-container{
+  background-color: var(--issue-color-light);
+  border: solid 1px var(--issue-color);
+  border-radius: 0.5em;
+  font-size: 0.75em;
+}
+
+.ufixit-content-preview-main.ufixit-clickable-container *:not(.ufixit-error-highlight):not(.ufixit-alt-text-preview):not(.ufixit-alt-text-preview *){
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.ufixit-content-preview-main.ufixit-clickable-container *:not(.ufixit-error-highlight):not(.ufixit-alt-text-preview):not(.ufixit-alt-text-preview *):hover{
+  background-color: rgb(207, 207, 207) !important;
+}
+
+.ufixit-content-preview-main.ufixit-clickable-container *:not(.ufixit-error-highlight):not(.ufixit-alt-text-preview .ufixit-alt-text-preview *):focus{
+  background-color: rgb(207, 207, 207) !important;
+}
+
+
+.ufixit-content-preview-main.ufixit-clickable-container *:not(.ufixit-error-highlight):not(.ufixit-alt-text-preview):not(.ufixit-alt-text-preview *):has(:hover){
+  background-color: transparent !important;
+}
+
+.ufixit-content-preview-main.ufixit-clickable-container *.ufixit-temp-selected{
+  outline: 3px solid blue;
+  outline-offset: 1px;
+  anchor-name: --ufixit-temp-selected;
+
+  /* Errors without text won't have an outline unless they have a border to provide size */
+  &:not(table) {
+    border: 1px solid transparent;
+  }
+}

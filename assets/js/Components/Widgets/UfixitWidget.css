@@ -1,0 +1,458 @@
+.ufixit-widget {
+  padding: 1.25rem 1.5rem;
+  overflow-y: auto;
+  color: var(--text-color);
+
+  .combo-container {
+
+    .combo-label {
+      font-weight: 600;
+      color: var(--text-color);
+    }
+
+    .combo-interactive-container {
+      margin-top: calc(0.25 * var(--spacer)) !important;
+      width: 100%;
+    }
+  }
+}
+
+.ufixit-widget-label {
+  font-size: 1em;
+  font-weight: 600;
+}
+
+.resolve-option {
+  border: 1px solid var(--border-color);
+  border-radius: var(--element-radius);
+  padding: 1rem 1rem;
+  line-height: normal;
+  align-content: center;
+
+  &.selected {
+    border-color: var(--selection-color);
+    background-color: var(--selection-color-light);
+  }
+
+  .option-label {
+    font-weight: 400;
+    font-size: .9em;
+    line-height: 1.5em;
+    display: inline-flex;
+    cursor: pointer;
+    align-items: center;
+
+    /* Custom CSS-only radio button styling adapted from https://moderncss.dev/pure-css-custom-styled-radio-buttons/ */  
+    > input[type="radio"] {
+      /* Remove default appearance */
+      -webkit-appearance: none;
+      appearance: none;
+      background-color: transparent;
+      margin: 0;
+
+      /* Draw a circle for the border */
+      font: inherit;
+      color: var(--text-color);
+      width: 1.15em;
+      height: 1.15em;
+      border: 0.15em solid var(--text-color);
+      border-radius: 50%;
+      margin-right: .75rem;
+      transition: 120ms border-width ease-in-out;
+      flex-shrink: 0;
+
+      &:checked {
+        border-color: var(--selection-color);
+        border-width: .4em;
+      }
+
+      &:focus {
+        outline: 2px solid var(--focus-color);
+        outline-offset: 2px;
+      }
+    }
+
+    &.disabled {
+      color: var(--text-disabled-color);
+      cursor: not-allowed;
+
+      > input[type="radio"] {
+        border-color: var(--text-disabled-color) !important;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  > .option-label {
+    + * {
+      width: 100%;
+      margin-block-start: 1rem;
+      /* border-block-start: 1px solid var(--selection-color);
+      padding-block-start: .5rem; */
+    }
+  }
+
+  .subtext {
+    text-align: end;
+    margin-block-start: .5rem;
+  }
+
+  .option-feedback {
+    margin-top: .5em;
+    font-size: .85em;
+    font-weight: 300;
+    text-align: end;
+    line-height: normal;
+    font-style: italic;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .indented {
+    margin-inline-start: 1.9em;
+  }
+}
+
+#btn-learn-more-open {
+  font-size: .85em
+}
+
+.dialog-indicator-background {
+  background-color: var(--help-color-light);
+  border: 1px solid var(--help-color);
+  border-radius: var(--element-radius);
+  padding: .75rem 1rem;
+}
+
+.dialog-indicator-container {
+  max-width: calc(40em / .9);
+  margin: 0 auto;  
+  color: var(--help-color-text);
+  font-size: .85em;
+  font-weight: 600;
+  font-family: var(--heading-font-family);
+  text-transform: uppercase;
+}
+
+.indicator-affects {
+  padding: calc(.35em + 1px) .5em .5em .5em;
+  flex-shrink: 0;
+}
+
+.indicator-container {
+  border: 1px solid var(--help-color);
+  background-color: var(--white);
+  border-radius: 2rem;
+  display: flex;
+  align-self: center;
+  box-sizing: border-box;
+  font-size: 1em;
+  color: var(--help-color-text);
+  padding: .2em 1em .2em .6em; /* Left padding is smaller because the icons have inherent padding. */
+
+  svg {
+    fill: var(--help-color-text);
+    padding: .15rem;
+  }
+}
+
+.ufixit-instructions {
+  font-size: .9em;
+  font-weight: 300;
+}
+
+.clarification-container {
+  padding-top: .5rem;
+  border-top: 1px solid var(--help-color);
+  margin-top: .5rem;
+
+  .clarification-text {
+    font-weight: 400;
+    font-style: italic;
+    font-size: .9em;
+  }
+}
+
+.ufixit-form-container {
+  position: relative;
+  overflow-y: auto;
+  margin-right: -5px;
+  padding-right: 5px;
+  margin-left: -5px;
+  padding-left: 5px;
+  box-sizing: content-box;
+}
+
+.ufixit-form-content {
+  > :first-child {
+    margin-top: 0;
+  }
+
+  label,
+  .instructions {
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  label[for] {
+    cursor: pointer;
+  }
+
+  .instructions-helper {
+    margin-top: .25em;
+    padding-left: 1.8rem;
+    font-weight: 400;
+    font-style: italic;
+    font-size: .9em;
+    color: var(--gray-dark);
+  }
+
+  .error-text {
+    font-size: .95em;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--issue-color);
+  }
+
+  .text-muted {
+    font-size: .85em;
+    font-weight: 400;
+    color: var(--gray-dark);
+  }
+
+  .btn-icon-only.btn-transparent {
+    padding: .15rem .25rem;
+    fill: var(--link-color);
+    background-color: transparent;
+    border-color: transparent;
+
+    &:hover,
+    &:focus,
+    &.active {
+      background-color: var(--link-color);
+      fill: var(--white);
+    }
+
+    &:focus {
+      outline: 2px solid var(--focus-color);
+      outline-offset: 1px;
+    }
+  }
+
+  /* Specific to the ContrastForm Widget... Could be its own CSS file */
+  .ratio-container {
+    padding: .25rem .5rem;
+    border: 2px solid var(--issue-color);
+
+    &.ratio-valid {
+      border-color: var(--primary-color);
+    }
+
+    .ratio-label {
+      text-transform: uppercase;
+      font-size: .85em;
+      font-weight: 600;
+    }
+
+    .ratio-value {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .ratio-status {
+      font-size: .85em;
+      font-weight: 600;
+      text-transform: uppercase;
+
+      &.invalid {
+        color: var(--issue-color);
+      }
+
+      &.valid {
+        color: var(--primary-color-dark);
+      }
+    }
+  }
+}
+
+.ufixit-learn-container {
+  max-width: 40em;
+  margin: 0 auto;
+
+  a {
+    color: var(--link-color);
+    font-weight: 600;
+
+    &:focus {
+      outline: 2px solid var(--focus-color);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+  }
+
+  > * {
+    margin-top: 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+    caption {
+      font-weight: bold;
+      margin-bottom: .5rem;
+    }
+
+    thead tr {
+      background-color: var(--gray-dark);
+      color: var(--white);
+
+      th {
+        padding: .25rem .5rem;
+      }
+    }
+
+    tbody tr {
+      color: var(--text-color);
+
+      &:nth-child(even) {
+        background-color: var(--background-color);
+      }
+
+      td {
+        padding: .25rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+    }
+
+
+  }
+}
+
+.ufixit-widget-toggle-view-container {
+  width: 100%;
+  padding: .2rem 0px;
+  cursor: pointer;
+
+  color: var(--primary-color-dark);
+  fill: var(--primary-color-dark);
+  font-weight: 500;
+
+  background-color: var(--primary-color-light);
+  border-top: 2px solid var(--primary-color-dark);
+  border-bottom: 1px solid var(--primary-color-dark);
+
+  .ufixit-widget-toggle-view-container-link {
+    border-radius: 4px;
+    &:focus {
+      outline: 2px solid var(--focus-color);
+      outline-offset: 2px;
+    }
+  }
+}
+
+.url-container {
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  padding: .5em 1em;
+  border-radius: var(--element-radius);
+}
+
+.ufixit-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(3px);
+  background-color: transparent;
+  z-index: 1000;
+  padding: 0 5px;
+  box-sizing: border-box;
+
+  .ufixit-overlay-content-container {
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 600px;
+    padding: 1rem;
+    background-color: var(--white);
+    border: 1px solid var(--gray);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+  }
+}
+
+/* dialog {
+  width: 90vw;
+  max-width: 50em;
+  overflow-y: auto;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 16px;
+  padding: 0;
+  background-color: var(--white);
+  z-index: 100;
+  box-shadow: 0 0 10px var(--shadow-color);
+} */
+
+.ufixit-widget-dialog {
+  height: 70vh;
+  max-height: 650px;
+  overflow-y: auto;
+
+  h4 {
+    font-weight: 600;
+    margin-top: .25em;
+  }
+}
+
+.ufixit-widget-dialog-header {
+  padding: 1rem 1rem .75rem 1rem;
+  background-color: var(--primary-color-light);
+  position: sticky;
+  top: 0;
+  box-shadow: 0 2px 2px var(--shadow-color);
+
+  .close-icon { 
+    padding: .25rem;
+    border-radius: 2rem;
+    cursor:pointer;
+    background-color: transparent;
+
+    &:hover, &:focus {
+      background-color: var(--white);
+    }
+  }
+}
+
+.ufixit-widget-dialog-content {
+  padding: 0 1rem;
+  color: var(--text-color);
+  font-size: 1em;
+  line-height: 1.5;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+dialog::backdrop {
+  pointer-events: none;
+  background: var(--backdrop-color);
+  backdrop-filter: blur(3px);
+}
+
+.file-review-status-container{
+  border-radius: 0.5em;
+}
+
+.file-reviewed{
+  background-color: var(--primary-color-light);
+}
+
+.file-progress{
+    background-color: var(--potential-color-light);
+}

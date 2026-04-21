@@ -1,0 +1,174 @@
+.main {
+  height: 100% !important;
+}
+
+.welcome-content-wrapper {
+  align-self: center;
+  padding: 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  margin: 0 auto;
+
+  h1 {
+    text-transform: uppercase;
+    font-size: 1.5em;
+    font-family: var(--heading-font-family);
+  }
+
+  .welcome-content {
+    margin: 0 auto;
+    max-width: 75%;
+
+    .welcome-description {
+      font-size: 1.15em;
+      font-weight: 500;
+    }
+  }
+
+  .welcome-content-list-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5em;
+
+    .welcome-content-list-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1em;
+      padding: 1em;
+      background-color: var(--white);
+      border: 1px solid var(--border-color);
+      flex: 1;
+      border-radius: 8px;
+
+      .welcome-content-list-item-icon {
+        flex-shrink: 0;
+
+        .icon-lg {
+          min-width: 2.25em;
+          min-height: 2.25em;
+          color: var(--primary-text);
+        }
+      }
+
+      .summary-text {
+        flex-grow: 1;
+        font-size: 1em;
+        color: var(--text-color);
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 45em) {
+  .welcome-content-wrapper {
+    max-width: 30em;
+
+    .welcome-content {
+      max-width: 100%;
+    }
+
+    .welcome-content-list-container {
+      flex-direction: column;
+      gap: 1em;
+
+      .welcome-content-list-item {
+        flex-direction: row;
+      }
+    }
+  }
+}
+
+.welcome-container {
+  margin: 0 auto;
+  max-width: 40em;
+  text-align: center;
+  border-radius: var(--window-radius);
+  padding: 2em;
+  
+  .logo-large {
+    width: 200px;
+    min-width: 30%;
+
+    @media screen and (max-width: 768px) {
+      align-self: center;
+      max-width: 325px;
+    }
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  p {
+    color: var(--text-secondary-color);
+  }
+
+  .scanner-container {
+    height: 6em;
+
+    .status-text {
+      font-size: 1.2em;
+      font-weight: 400;
+    }
+  }
+
+  button {
+    padding: .75em;
+    width: 100%;
+    background-color: var(--selection-color);
+    border-color: transparent;
+  }
+}
+
+
+
+.invisible-spacer {
+  padding-bottom: 4rem;
+}
+
+.welcome-footer {
+  padding-top: 4rem;
+}
+
+.tagline {
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: 400;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.logo-small {
+  width: 80px;
+  height: auto;
+  opacity: 0.8;
+  margin-top: 1px;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+/* Adapted from https://css-loaders.com/progress/ (#16) */
+.loader {
+  height: 8px;
+  border-radius: 4px;
+  width: 100%;
+  --c: no-repeat linear-gradient(var(--progress-bar-color) 0 0);
+  background: var(--c),var(--c), var(--progress-bar-background-color);
+  background-size: 60% 100%;
+  animation: l16 5s infinite;
+
+  &.complete {
+    animation: none;
+    background: var(--selection-color);
+  }
+}
+@keyframes l16 {
+  0%   {background-position:-150% 0,-150% 0}
+  66%  {background-position: 250% 0,-150% 0}
+  100% {background-position: 250% 0, 250% 0}
+}

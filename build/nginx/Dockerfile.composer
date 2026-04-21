@@ -1,0 +1,5 @@
+FROM composer:2.6.4
+
+RUN apk add gd-dev libpng-dev
+RUN docker-php-ext-install gd
+WORKDIR /app

@@ -1,113 +1,49 @@
 {
-  "name": "UDOIT",
-  "description": "The Universal Design Online content Inspection Tool, or UDOIT identifies and fixes accessibility issues in Canvas by Instructure.",
-  "keywords": [
-    "education",
-    "canvas",
-    "CDL",
-    "EDU",
-    "UCF",
-    "Instructure",
-    "508"
-  ],
-  "website": "https://cdl.ucf.edu/initiatives/udoit/",
-  "repository": "https://github.com/ucfopen/UDOIT",
-  "success_url": "/",
-  "formation": {
-    "web": {
-      "quantity": 1,
-      "size": "free"
-    },
-    "worker": {
-      "quantity": 1,
-      "size": "free"
-    }
-  },
-  "env": {
-    "CONSUMER_KEY": {
-      "description": "LTI consumer key entered when adding UDOIT LTI to Canvas",
-      "generator": "secret"
-    },
-    "SHARED_SECRET": {
-      "description": "LTI secret entered when adding UDOIT LTI to Canvas",
-      "generator": "secret"
-    },
-    "OAUTH2_ID": {
-      "description": "Oauth ID from the developer api key created by your admin"
-    },
-    "OAUTH2_KEY": {
-      "description": "Oauth Key from the developer api key created by your admin"
-    },
-    "OAUTH2_URI": {
-      "description": "Full url to your oauth2responce.php file",
-      "value": "https://your.herokuapp.com/oauth2response.php"
-    },
-    "OAUTH2_ENFORCE_SCOPES": {
-      "description": "Set to true if you have a scoped developer key",
-      "value": "false"
-    },
-    "GOOGLE_API_KEY": {
-      "description": "Google API key for caption detection support",
-      "required": false
-    },
-    "VIMEO_API_KEY": {
-      "description": "Vimeo API key for caption detection support",
-      "required": false
-    },
-    "GA_TRACKING_CODE": {
-      "description": "Google Analytics tracking code",
-      "required": false
-    },
-    "USE_HEROKU_CONFIG": {
-      "description": "needed to use the Heroku configuration",
-      "value": "true"
-    },
-    "USE_API_CACHING": {
-      "description": "Flag to indicate whether or not to use the api caching feature",
-      "required": false
-    },
-    "CANVAS_NAV_ITEM_NAME" : {
-      "description": "The text displayed in the canvas navigation menu to launch this app",
-      "value": "UDOIT"
-    },
-    "WORKER_ENABLED": {
-      "description": "Enable the background worker (requires you turn on the worker dyno).",
-      "value": "true"
-    },
-    "SCAN_FILE_SIZE_LIMIT": {
-      "description": "Max file size to scan, anything larger gets set as unscannable.",
-      "value": "50000000"
-    },
-    "ALT_TEXT_LENGTH_LIMIT": {
-      "description": "Maximum character length for alt-text before the item gets flagged as a warning.",
-      "value": "125"
-    },
-    "ADMIN_PANEL_ENABLED": {
-      "description": "Enable the Admin Panel feature.  False disables access and removes the block from the configuration XML.",
-      "value": "false"
-    },
-    "FOOTER_ENABLED": {
-      "description": "True enables the footer.",
-      "value": "true"
-    },
-    "YOUTUBE_TOS_LINK" : {
-      "description": "The link to the YouTube Terms of Service.",
-      "value": "https://www.youtube.com/t/terms"
-    },
-    "GOOGLE_PRIVACY_POLICY_LINK" : {
-      "description": "The link to the Google Privacy Policy.",
-      "value": "http://www.google.com/policies/privacy"
-    }
-  },
-  "addons": [
-    "heroku-postgresql:hobby-dev"
-  ],
-  "buildpacks": [
-    {
-      "url": "https://github.com/heroku/heroku-buildpack-php"
-    }
-  ],
-  "scripts": {
-    "postdeploy": "composer db-setup"
+	"name": "UDOIT",
+	"description": "The Universal Design Online content Inspection Tool, or UDOIT (pronounced, 'You Do It') enables faculty to identify accessibility issues in their Learning Management System. It will scan a course, generate a report, and provide resources on how to address common accessibility issues.",
+	"keywords": [
+	  "education",
+	  "canvas",
+	  "CDL",
+	  "EDU",
+	  "UCF",
+	  "Instructure",
+	  "508"
+	],
+	"website": "https://cdl.ucf.edu/initiatives/udoit/",
+	"repository": "https://github.com/ucfopen/UDOIT",
+	"success_url": "/",
+	"env": {
+	  "APP_ENV": {
+		"description": "Application environment can either be 'dev' or 'prod'.",
+		"value": "prod"
+	  },
+	  "APP_LMS": {
+		"description": "LMS which UDOIT will work in.",
+		"value": "canvas"
+	  },
+	  "BASE_URL": {
+		"description": "Full URL to your instance.",
+		"value": "https://your.herokuapp.com"
+	  },
+	  "JWK_BASE_URL": {
+		"description": "Overrides `iss` to use an alternative url for JWK. Leave empty if using cloud hosted Canvas.",
+		"value": ""
+	  },
+	  "HEROKU_TIMEOUT": {
+		"description": "Web requests time out at 30 seconds causing the app to crash. Value should be significantly less than 30 to prevent this.",
+		"value": "15"
+	  }
+	},
+	"addons": [
+	  "heroku-postgresql:mini"
+	],
+	"buildpacks": [
+	  {
+		"url": "https://github.com/heroku/heroku-buildpack-php"
+	  },
+	  {
+		"url": "https://github.com/heroku/heroku-buildpack-nodejs"
+	  }
+	]
   }
-}
